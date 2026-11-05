@@ -185,5 +185,3 @@ function animate(now) {
 }
 
 requestAnimationFrame(animate);
-
-animate();
