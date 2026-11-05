@@ -204,7 +204,7 @@ export class PlayerController {
 
     useJetpack(dt) {
 
-        if (!this.keys.Space) return;
+        if (!this.keys.KeyX) return;
 
         if (this.grounded) return;
 
