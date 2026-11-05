@@ -75,18 +75,18 @@ sunlight.position.set(-30, 50, 20);
 
 scene.add(sunlight);
 
+
 // ========================================
 // TEST ENVIRONMENT
 // ========================================
 
-const groundGeometry = new THREE.PlaneGeometry(
-    1000,
-    1000
-);
+// Ground
+
+const groundGeometry = new THREE.PlaneGeometry(500, 500);
 
 const groundMaterial = new THREE.MeshStandardMaterial({
-    color: 0x303b32,
-    roughness: 0.95
+    color: 0x52604c,
+    roughness: 1
 });
 
 const ground = new THREE.Mesh(
@@ -98,6 +98,47 @@ ground.rotation.x = -Math.PI / 2;
 ground.position.y = -1;
 
 scene.add(ground);
+
+// Grid
+
+const grid = new THREE.GridHelper(
+    500,
+    100,
+    0x9aab8b,
+    0x64745e
+);
+
+grid.position.y = -0.98;
+
+scene.add(grid);
+
+// Reference pillars
+
+function createPillar(x, z, color) {
+
+    const geometry = new THREE.BoxGeometry(2, 5, 2);
+
+    const material = new THREE.MeshStandardMaterial({
+        color: color,
+        roughness: 0.7
+    });
+
+    const pillar = new THREE.Mesh(
+        geometry,
+        material
+    );
+
+    pillar.position.set(x, 1.5, z);
+
+    scene.add(pillar);
+
+}
+
+createPillar(0, -15, 0xff4444);
+createPillar(15, 0, 0x4488ff);
+createPillar(-15, 0, 0x44ff88);
+createPillar(0, 15, 0xffcc44);
+
 
 // ========================================
 // RESIZE
