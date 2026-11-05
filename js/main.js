@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-
+import { PlayerController } from './player.js';
 // ========================================
 // SCENE
 // ========================================
@@ -18,8 +18,6 @@ const camera = new THREE.PerspectiveCamera(
     0.1,
     10000
 );
-
-camera.position.set(0, 2, 6);
 
 // ========================================
 // RENDERER
@@ -40,6 +38,20 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 document.getElementById("world").appendChild(
     renderer.domElement
+);
+
+// ========================================
+// PLAYER CONTROLLER
+// ========================================
+
+const player = new PlayerController(
+    camera,
+    renderer.domElement,
+    scene,
+    {
+        gravity: 24,
+        groundY: -1
+    }
 );
 
 // ========================================
@@ -105,15 +117,32 @@ window.addEventListener("resize", () => {
 });
 
 // ========================================
-// MAIN LOOP
+// MAIN GAME LOOP
 // ========================================
 
-function animate() {
+let previousTime = performance.now();
+
+function animate(now) {
 
     requestAnimationFrame(animate);
+
+    const dt = Math.min(
+        (now - previousTime) / 1000,
+        0.05
+    );
+
+    previousTime = now;
+
+    // Update player physics.
+
+    player.update(dt);
+
+    // Render scene.
 
     renderer.render(scene, camera);
 
 }
+
+requestAnimationFrame(animate);
 
 animate();
